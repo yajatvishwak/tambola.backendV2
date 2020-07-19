@@ -92,6 +92,7 @@ export default function App() {
     );
   }
 }
+//this is random sentence to check git
 
 const styles = StyleSheet.create({
   container: {
