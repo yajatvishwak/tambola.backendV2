@@ -18,7 +18,11 @@ function Winners(props) {
   const handleBye = () => {
     Global.roomID = null;
     AsyncStore.storeData(Global);
-    navigation.replace("Feed");
+    if (typeOfGame === "Instant") {
+      navigation.replace("Landing");
+    } else {
+      navigation.replace("Feed");
+    }
   };
 
   useEffect(() => {
