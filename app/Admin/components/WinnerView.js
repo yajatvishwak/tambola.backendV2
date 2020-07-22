@@ -18,7 +18,6 @@ function WinnerView(props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#E6E6E6",
     borderRadius: 7,
     marginBottom: 20,
   },

@@ -21,7 +21,7 @@ function Waiting(props) {
     });
     socket.on("broadcast", (m) => {
       if (m.ready === true) {
-        navigation.replace("Game");
+        navigation.replace("Game", { typeOfGame: "Session" });
       }
     });
   }, []);

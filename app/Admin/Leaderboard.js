@@ -12,6 +12,7 @@ import Axios from "axios";
 import Global from "../../utility/Global";
 import env from "../../variable";
 import { AdMobBanner } from "expo-ads-admob";
+import AwesomeButton from "react-native-really-awesome-button";
 
 function Winner(props) {
   const [winners, setwinners] = useState([]);
@@ -29,8 +30,7 @@ function Winner(props) {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <StatusBar hidden />
+    <>
       <View
         style={{
           alignSelf: "center",
@@ -45,14 +45,22 @@ function Winner(props) {
           }
         />
       </View>
-      <Text style={styles.leaderboard}>Leaderboard</Text>
-      <Text style={styles.realtimeLeaderboard}>Realtime Leaderboard</Text>
+      <ScrollView style={styles.container}>
+        <StatusBar hidden />
 
-      <WinnerView style={styles.winnerView} winners={winners}></WinnerView>
-      <TouchableOpacity onPress={handleRefresh} style={styles.button}>
-        <Text>Refresh</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <Text style={styles.leaderboard}>Leaderboard</Text>
+        <Text style={styles.realtimeLeaderboard}>Realtime Leaderboard</Text>
+        <AwesomeButton
+          width={100}
+          onPress={handleRefresh}
+          style={styles.button}
+        >
+          Refresh
+        </AwesomeButton>
+
+        <WinnerView style={styles.winnerView} winners={winners}></WinnerView>
+      </ScrollView>
+    </>
   );
 }
 
@@ -62,21 +70,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(227,214,214,1)",
   },
   button: {
-    width: 200,
-    height: 40,
-    backgroundColor: "rgba(242,163,101,1)",
-    shadowColor: "rgba(0,0,0,1)",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    elevation: 5,
-    shadowOpacity: 0.3,
-    shadowRadius: 25,
-    borderRadius: 20,
-
     marginBottom: 10,
-    alignSelf: "center",
+    marginLeft: 25,
+    alignSelf: "flex-start",
     justifyContent: "center",
     alignItems: "center",
   },

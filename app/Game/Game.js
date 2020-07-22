@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, StatusBar, Modal } from "react-native";
 
 import env from "../../variable";
@@ -14,7 +14,7 @@ import Ticket from "./components/Ticket";
 import Claim from "./components/Claim";
 import Board from "./components/Board";
 import Global from "../../utility/Global";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Axios from "axios";
 
 const data = require("../TTS/tts.json");
@@ -26,8 +26,18 @@ const io = require("socket.io-client");
 //connectSocket(username, roomID);
 
 function Game(props) {
-  var roomID = Global.roomID;
-  var username = Global.username;
+  var route = useRoute();
+  var { typeOfGame } = route.params;
+  var { roomID } = route.params;
+  var { username } = route.params;
+
+  //console.log(roomID);
+  var { username } = route.params || "User";
+  if (typeOfGame === "Session") {
+    username = Global.username;
+    roomID = Global.roomID;
+  }
+
   const navigation = useNavigation();
   const [claimModal, setclaimModal] = useState(false);
   const [boardModal, setboardModal] = useState(false);
@@ -55,21 +65,38 @@ function Game(props) {
         socket.emit("room", { username: username, room: room });
       });
     }
-    makeaCall("POST", env.apiUrl + "/game/getCategoryandTicket", {
-      roomID: roomID,
-      username: username,
-    }).then((res) => {
-      //console.log("This is null wtf> " + res);
-      if (res == null) {
-        alert(
-          "There's some network issue. Please check your network or contact the admin. Error code: NE-catTic"
-        );
-      } else {
-        setcategory(res.category);
-        setticket(res.ticket);
-        setcatFull(res.ff);
-      }
-    });
+
+    if (typeOfGame === "Session") {
+      makeaCall("POST", env.apiUrl + "/game/getCategoryandTicket", {
+        roomID: roomID,
+        username: username,
+      }).then((res) => {
+        //console.log("This is null wtf> " + res);
+        if (res == null) {
+          alert(
+            "There's some network issue. Please check your network or contact the admin. Error code: NE-catTic"
+          );
+        } else {
+          setcategory(res.category);
+          setticket(res.ticket);
+          setcatFull(res.ff);
+        }
+      });
+    } else {
+      Axios.post(env.apiUrl + "/game/getCategoryandTicketInstant").then(
+        (res) => {
+          if (res == null) {
+            alert(
+              "There's some network issue. Please check your network or contact the admin. Error code: NE-catTic"
+            );
+          } else {
+            setcategory(res.data.category);
+            setticket(res.data.ticket[0]);
+            setcatFull(res.data.ff);
+          }
+        }
+      );
+    }
 
     connectSocket(username, roomID);
     socket.on("winner", (m) => {
@@ -97,6 +124,7 @@ function Game(props) {
 
     socket.on("broadcast", (m) => {
       handleCallingNumber(m);
+      //console.log(m);
       var go = m.gameOver;
       setgameOver(go);
     });
@@ -176,14 +204,13 @@ function Game(props) {
       "You have been disconnected by admin. If you think this was a mistake, contact your admin."
     );
     Global.roomID = null;
-
     AsyncStore.storeData(Global);
     navigation.replace("Feed");
     return null;
   } else if (gameOver === true) {
     alert("Game Over");
     //redirect to winner page instead
-    navigation.replace("Winners");
+    navigation.replace("Winners", { roomID: roomID, typeOfGame: typeOfGame });
     return null;
   } else {
     return (
@@ -204,6 +231,7 @@ function Game(props) {
             username={username}
             roomID={roomID}
             ff={catFull}
+            typeOfGame={typeOfGame}
           />
         </Modal>
         <Modal

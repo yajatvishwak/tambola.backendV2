@@ -63,7 +63,7 @@ function Feed(props) {
   useEffect(() => {
     if (Global.roomID !== null) {
       alert("You are already in a room");
-      navigation.replace("Game");
+      navigation.replace("Game", { typeOfGame: "Session" });
     } else {
       axios.get(env.apiUrl + "/user/getSessions").then((res) => {
         var data = res.data;

@@ -10,6 +10,9 @@ const AsyncStore = require("../../utility/AsyncStore");
 
 function Winners(props) {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { roomID } = route.params;
+  const { typeOfGame } = route.params;
   const [filler, setfiller] = useState([]);
 
   const handleBye = () => {
@@ -20,9 +23,11 @@ function Winners(props) {
 
   useEffect(() => {
     console.log(Global.roomID);
+    const urlString =
+      typeOfGame === "Instant" ? "/game/getWinnersInstant" : "/game/getWinners";
     axios
-      .post(env.apiUrl + "/game/getWinners", {
-        roomID: Global.roomID,
+      .post(env.apiUrl + urlString, {
+        roomID: typeOfGame === "Instant" ? roomID : Global.roomID,
       })
       .then((res) => {
         const winners = res.data;

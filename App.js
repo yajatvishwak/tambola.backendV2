@@ -4,6 +4,7 @@ import { AppLoading } from "expo";
 import * as Font from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { setTestDeviceIDAsync } from "expo-ads-admob";
 
 const asyncStore = require("./utility/AsyncStore/");
 const Stack = createStackNavigator();
@@ -21,8 +22,15 @@ import AdminGame from "./app/Admin/AdminGame";
 import RoomCreation from "./app/RoomCreation/RoomCreation";
 import Logout from "./app/Logout/Logout";
 import Howtoplay from "./app/HowtoPlay/Howtoplay";
+import ChooseInstant from "./app/ChooseInstant/ChooseInstant";
+import MatchingHost from "./app/MatchingHost/MatchingHost";
+import MatchingClient from "./app/MatchingClient/MatchingClient";
 
 console.disableYellowBox = true;
+
+const ad = async () => {
+  await setTestDeviceIDAsync("EMULATOR");
+};
 
 const getFonts = () => {
   return Font.loadAsync({
@@ -40,6 +48,7 @@ export default function App() {
   const [logged, setlogged] = useState(false);
 
   useEffect(() => {
+    ad();
     //console.log("this is");
     asyncStore
       .getData()
@@ -74,6 +83,9 @@ export default function App() {
               <Stack.Screen name="Landing" component={Landing} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Signup" component={SignUp} />
+              <Stack.Screen name="ChooseInstant" component={ChooseInstant} />
+              <Stack.Screen name="MatchingHost" component={MatchingHost} />
+              <Stack.Screen name="MatchingClient" component={MatchingClient} />
             </>
           )}
           <>

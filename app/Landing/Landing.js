@@ -56,13 +56,28 @@ function Landing(props) {
                 </AwesomeButton>
               </View>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate("Howtoplay");
+            <View
+              style={{
+                flexDirection: "row",
+                alignContent: "center",
+                justifyContent: "center",
               }}
             >
-              <Text style={styles.howToPlay}>How to play?</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("Howtoplay");
+                }}
+              >
+                <Text style={styles.howToPlay}>How to play?</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("ChooseInstant");
+                }}
+              >
+                <Text style={styles.howToPlay}>Guest Mode</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
@@ -97,6 +112,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     marginLeft: 20,
+    flexWrap: "wrap",
   },
   group: {
     width: 120,
@@ -145,11 +161,10 @@ const styles = StyleSheet.create({
   },
   howToPlay: {
     fontFamily: "roboto-900",
+    fontSize: 17,
     color: "rgba(179, 179, 179,1)",
-    marginTop: 22,
-    marginLeft: 141,
     opacity: 50,
-    marginBottom: 40,
+    margin: 30,
   },
 });
 

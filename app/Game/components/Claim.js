@@ -15,6 +15,7 @@ function ShoutModal(props) {
   const [spinner, setspinner] = useState(false);
   var category = props.category;
   var ticket = props.ticket;
+  var typeOfGame = props.typeOfGame;
   //console.log(props.ff);
   var i = -1;
   var cats = category.map((item) => {
@@ -23,7 +24,11 @@ function ShoutModal(props) {
       <TouchableOpacity
         onPress={() => {
           setspinner(true);
-          makeaCall("POST", env.apiUrl + "/game/checkWinner", {
+          const urlString =
+            typeOfGame === "Instant"
+              ? "/game/checkWinnerInstant"
+              : "/game/checkWinner";
+          makeaCall("POST", env.apiUrl + urlString, {
             roomID: props.roomID,
             ticket: ticket,
             username: props.username,
@@ -37,7 +42,10 @@ function ShoutModal(props) {
                 props.close();
               } else if (res.code == "DWC") {
                 alert(
-                  " Someone else won this claim already. Try again with some other claim!"
+                  res.user
+                    ? res.user +
+                        " won this claim already. Try again with some other claim!"
+                    : "Someone else won this claim already. Try again with some other claim!"
                 );
                 props.close();
               } else {

@@ -43,13 +43,13 @@ function Deets(props) {
             .then((res) => {
               if (GLOBAL.roomID !== null) {
                 alert("You are already in a game");
-                navigation.replace("Game");
+                navigation.replace("Game", { typeOfGame: "Session" });
               } else {
                 if (res.data === true) {
                   alert("Game Active Now redirecting to game.");
                   GLOBAL.roomID = roomID;
                   AsyncStore.storeData(GLOBAL);
-                  navigation.replace("Game");
+                  navigation.replace("Game", { typeOfGame: "Session" });
                 } else {
                   alert("Please wait till the admin starts the game");
                   props.toggleDeetsModal();

@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 import AwesomeButton from "react-native-really-awesome-button";
 
