@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    backgroundColor: "rgba(227,214,214,1)",
   },
   heyThere1Stack: {
     width: 300,

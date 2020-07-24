@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text, Modal } from "react-native";
 import AwesomeButton from "react-native-really-awesome-button";
 import { useNavigation } from "@react-navigation/native";
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: "center",
     justifyContent: "center",
+    backgroundColor: "rgba(227,214,214,1)",
   },
   heyThere1Stack: {
     width: 300,
