@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
-  Clipboard,
+  Share,
 } from "react-native";
 import AwesomeButton from "react-native-really-awesome-button";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -21,6 +21,29 @@ function ChooseInstant(props) {
   const [data, setdata] = useState([]);
   const route = useRoute();
   const { username } = route.params;
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          username +
+          " invites you to play a game of Tambola. Try your luck! Room ID : " +
+          roomID +
+          "\n If you still don't have the app, check it out on playstore. Do review us! https://play.google.com/store/apps/details?id=com.yajatvishwak.tamboola",
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const users = data.map((item) => {
     return <Item element={item}> </Item>;
@@ -82,13 +105,8 @@ function ChooseInstant(props) {
         }}
       >
         <Text style={styles.id}>{roomID}</Text>
-        <TouchableOpacity
-          onPress={() => {
-            Clipboard.setString(roomID);
-            alert("Copied to Clipboard");
-          }}
-        >
-          <Text style={styles.copy}>copy</Text>
+        <TouchableOpacity onPress={onShare}>
+          <Text style={styles.copy}>Share</Text>
         </TouchableOpacity>
       </View>
 

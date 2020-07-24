@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, StatusBar, Modal } from "react-native";
+import {
+  StyleSheet,
+  View,
+  StatusBar,
+  Modal,
+  BackHandler,
+  Alert,
+} from "react-native";
 
 import env from "../../variable";
 import makeaCall from "../../utility/networkCall";
@@ -57,6 +64,24 @@ function Game(props) {
   //console.log(username);
 
   useEffect(() => {
+    //handling back button Press
+    const backAction = () => {
+      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel",
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backAction
+    );
+
     // Pregame functions
     const socket = io(env.apiUrl);
     function connectSocket(username, room) {
@@ -132,6 +157,7 @@ function Game(props) {
       alert("You have been disconnected by Admin");
       setdisconnect(true);
     });
+    return () => backHandler.remove();
   }, []);
 
   //TTS

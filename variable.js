@@ -4,7 +4,7 @@ export const prodUrl = "https://tamboola.ml";
 
 const ENV = {
   dev: {
-    apiUrl: "http://192.168.0.101:3000",
+    apiUrl: "http://192.168.0.102:3000",
     //apiUrl: "https://tamboola.ml",
   },
   staging: {

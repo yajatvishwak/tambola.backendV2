@@ -1,11 +1,10 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Item from "../MatchingHost/component/Item";
 
 const io = require("socket.io-client");
 import env from "../../variable";
-import Axios from "axios";
 
 function ChooseInstant(props) {
   const navigation = useNavigation();
