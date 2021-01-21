@@ -40,7 +40,7 @@
     "react-native-textinput-effects": "^0.6.1",
     "react-native-unordered-list": "^1.0.4",
     "react-native-web": "~0.11.7",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "uuid": "^8.2.0",
     "validator": "^13.1.1"
   },
